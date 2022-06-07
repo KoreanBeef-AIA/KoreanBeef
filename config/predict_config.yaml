@@ -1,0 +1,11 @@
+DIRECTORY:
+  dataset: /path/to/01_splitdataset
+  sample: /path/to/sample_submission.csv
+  phase: test
+
+TRAIN:
+  train_serial: 'train_serial'
+
+PREDICT:
+  seed: 42
+  gpu: 0
