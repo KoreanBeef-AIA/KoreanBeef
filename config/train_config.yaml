@@ -1,15 +1,15 @@
 DIRECTORY:
-  dataset: /path/to/01_splitdataset
+  dataset: /content/drive/MyDrive/KoreanBeef/data/01_splitdataset/
 
 TRAINER :
-  model: effnet #Linear
-  optimizer: adam
+  model: convnxt # 모델 변경에 따라 값을 변경
+  optimizer: adamw
   learning_rate: 5.0e-4
   loss: crossentropy
   metric:
     - accuracy
     - f1macro
-  n_epochs: 3
+  n_epochs: 50
   early_stopping_target: val_accuracy
   early_stopping_patience: 10
   early_stopping_mode: max
@@ -17,11 +17,15 @@ TRAINER :
   gpu: 0
   seed: 42
   
-MODEL:
+MODEL: # 사용 모델 추가
   Linear:
     n_inputs:  784
     n_outputs: 5
   effnet:
+    n_outputs: 5
+  resnet:
+    n_outputs: 5
+  convnxt:
     n_outputs: 5
 
 DATALOADER:
