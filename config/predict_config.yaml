@@ -3,8 +3,8 @@ DIRECTORY:
   sample: /content/drive/MyDrive/KoreanBeef/data/sample_submission.csv
   phase: test
 
-TRAIN: # results/ 폴더 안에 새로 생긴 모델 결과 경로
-  train_serial: '/content/drive/MyDrive/KoreanBeef/results/train/20220609_072048_CONVNET'
+TRAIN:
+  train_serial: 'CONVNEXT_20220620_120012'
 
 PREDICT:
   seed: 42

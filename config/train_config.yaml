@@ -1,10 +1,11 @@
 DIRECTORY:
   dataset: /content/drive/MyDrive/KoreanBeef/data/01_splitdataset/
 
-TRAINER :
-  model: convnxt # 모델 변경에 따라 값을 변경
-  optimizer: adamw
+TRAINER:
+  model: convnext
+  optimizer: nadam
   learning_rate: 5.0e-4
+  weight_decay: 0.005
   loss: crossentropy
   metric:
     - accuracy
@@ -16,21 +17,29 @@ TRAINER :
   amp: False
   gpu: 0
   seed: 42
-  
-MODEL: # 사용 모델 추가
+
+MODEL:
   Linear:
-    n_inputs:  784
+    n_inputs: 784
     n_outputs: 5
   effnet:
     n_outputs: 5
   resnet:
     n_outputs: 5
-  convnxt:
+  convnext:
+    n_outputs: 5
+  inception:
+    n_outputs: 5
+  deit:
+    n_outputs: 5
+  effnet_v2:
+    n_outputs: 5
+  vitbase:
     n_outputs: 5
 
 DATALOADER:
   batch_size: 16
-  num_workers: 1
+  num_workers: 4
   shuffle: True
   pin_memory: True
   drop_last: False
@@ -43,4 +52,3 @@ LOGGER:
     - accuracy
     - f1macro
     - elapsed_time
-

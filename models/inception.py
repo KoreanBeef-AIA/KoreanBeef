@@ -2,10 +2,10 @@ from torch import nn
 import timm
 
 
-class ConvNxt(nn.Module):
+class Inception(nn.Module):
     def __init__(self, n_outputs:int, **kwargs):
-        super(ConvNxt, self).__init__()
-        self.model = timm.create_model('convnext_large', pretrained=True)
+        super(Inception, self).__init__()
+        self.model = timm.create_model('inception_v4', pretrained=True)
         self.model.classifier = nn.Sequential(
             nn.Linear(in_features = 1792, out_features=625),
             nn.ReLU(),

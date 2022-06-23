@@ -5,7 +5,7 @@ import timm
 class EffNet(nn.Module):
     def __init__(self, n_outputs:int, **kwargs):
         super(EffNet, self).__init__()
-        self.model = timm.create_model('efficientnet_b4', pretrained=True)
+        self.model = timm.create_model('efficientnet_b7', pretrained=True)
         self.model.classifier = nn.Sequential(
             nn.Linear(in_features = 1792, out_features=625),
             nn.ReLU(),
