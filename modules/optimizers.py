@@ -7,5 +7,7 @@ def get_optimizer(optimizer_name: str):
         return optim.Adam
     elif optimizer_name == 'adamw':
         return optim.AdamW
+    elif optimizer_name == 'nadam':
+        return optim.NAdam
     else:
         raise ValueError('Not a valid optimizer')
