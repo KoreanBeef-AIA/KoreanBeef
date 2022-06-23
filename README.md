@@ -2,40 +2,68 @@
 
 ## KoreanBeef팀 소고기 분류 문제
 
+### 최종 스코어
+
+| public       | Private     | Final         |
+| ------------ | ----------- | ------------- |
+| 0.9483128554 | 0.945578642 | 0.94639890602 |
+
 ### 코드 구조
 
 ```
 ${KoreanBeef}
+├── config
+│   ├── predict_config.yaml
+│   ├── preprocess_config.yaml
+│   └── train_config.yaml
 ├── data/
 │   ├── train.zip
 │   ├── test.zip
 │   └── sample_submission.csv
-├── config/
-│   ├── train_config.yaml
-│   ├── predict_config.yaml
-│   └── preprocess_config.yaml
+├── models
+│   ├── convnext.py
+│   ├── customnet.py
+│   ├── ...
+│   └── utils.py
+├── modules
+│   ├── datasets.py
+│   ├── earlystoppers.py
+│   ├── losses.py
+│   ├── metrics.py
+│   ├── optimizers.py
+│   ├── recorders.py
+│   ├── trainer.py
+│   └── utils.py
+├── polygon.ipynb
+├── predict.py
+├── preprocess.py
+├── train.py
 ├── README.md
-└── cowcf2.ipynb
+├── Preprocess.ipynb
+├── detectron2.ipynb
+├── ensemble.ipynb
+└── train_predict.ipynb
 ```
 
-- data: 학습/추론에 필요한 소고기 이미지 데이터 폴더
 - config: 학습/추론에 필요한 파라미터 등을 기록하는 yaml 파일
-- cowcf2.ipunb
-  - modules
-    - datasets.py: dataset 클래스
-    - earlystoppers.py: loss가 지정된 에폭 수 이상 개선되지 않을 경우 학습을 멈추는 early stopper 클래스
-    - losses.py: config에서 지정한 loss function을 리턴
-    - metrics.py: config에서 지정한 metric을 리턴
-    - optimizers.py: config에서 지정한 optimizer를 리턴
-    - recorders.py: 로그와 learnig curve 등을 기록
-    - trainer.py: 에폭 별로 수행할 학습 과정
-    - utils.py: 여러 확장자 파일을 불러오거나 여러 확장자로 저장하는 등의 함수가 포함된 파일
-  - models.utils.py: config에서 지정한 모델 클래스를 불러와 리턴하는 파일
-  - models.SpinaNet_vgg: SpinaNet_vgg 모델 돌림
-  - preprocess: 학습/추론에 필요한 데이터 로드 작업
-  - train: 학습
-  - predict: 추론
-  - Ensemble: 모델 블랜딩
+- data: 학습/추론에 필요한 소고기 이미지 데이터 폴더
+- models:
+  - utils.py: config에서 지정한 모델 클래스를 불러와 리턴하는 파일
+- modules:
+  - datasets.py: dataset 클래스
+  - earlystoppers.py: loss가 지정된 에폭 수 이상 개선되지 않을 경우 학습을 멈추는 early stopper 클래스
+  - losses.py: config에서 지정한 loss function을 리턴
+  - metrics.py: config에서 지정한 metric을 리턴
+  - optimizers.py: config에서 지정한 optimizer를 리턴
+  - recorders.py: 로그와 learnig curve 등을 기록
+  - trainer.py: 에폭 별로 수행할 학습 과정
+  - utils.py: 여러 확장자 파일을 불러오거나 여러 확장자로 저장하는 등의 함수가 포함된 파일
+- preprocess.py or Preprocess.ipynb: 학습/추론에 필요한 데이터 로드 작업
+- train.py or train_predict.ipynb: 학습
+- predict or train_predict.ipynb: 추론
+- polygon.ipynb: Detectron2의 image segmentation model을 돌리기 위한 전처리
+- detectron2.ipynb: Detectron2 학습 및 결과
+- ensemble.ipynb: 모델 블랜딩
 
 ---
 
@@ -109,7 +137,7 @@ ${DATA}
    1. DIRECTORY/dataset: 01_splitdataset 폴더의 경로 지정
    2. TRAINER/model: 수정
    3. MODEL 안에 모델 넣어줌
-2. 'train' 실행
+2. 'train.py 또는 train_predict.ipynb' 실행
 3. 'results/train/' 내에 결과 폴더가 저장됨
 
 ### 추론
@@ -118,11 +146,12 @@ ${DATA}
    1. DIRECTORY/dataset: 01_splitdataset 폴더의 경로 지정
    2. DIRECTORY/sample: sample_subission.csv 파일의 경로 지정
    3. TRAIN/train_serial: 파라미터를 불러올 train serial number (result/train 내 폴더명) 지정
-2. 'predict' 실행
+2. 'predict or train_predict.ipynb' 실행
 3. 'results/predict/' 내에 결과 폴터가 생기고 (predictions.csv)이 저장됨
 
 ### 앙상블
 
 1. 각 모델별 추론 결과 csv 6개 가져오기
-2. 총 6개 결과 중에 4개 이상은 몰아주기 / 4개 미만은 평균값에 소수점 제하고 +1
+2. 'ensemble.ipynb' 실행
+   - 총 6개 결과 중에 4개 이상은 몰아주기 / 4개 미만은 평균값에 소수점 제하고 +1
 3. 지정한 경로에 최종 결과 csv 저장됨.
