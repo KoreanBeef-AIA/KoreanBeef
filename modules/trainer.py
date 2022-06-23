@@ -49,6 +49,7 @@ class Trainer():
                         scaled_loss.backward()
                     
                 self.optimizer.step()
+                torch.optim.lr_scheduler.ExponentialLR(self.optimizer, gamma = 0.99)
             
             elif mode in ['val','test']:
                 pass
